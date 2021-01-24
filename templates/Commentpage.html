@@ -1,0 +1,71 @@
+{% extends 'NavbarMainWithLogin.html' %}
+{% block navbarWithlogin %}
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+    <title>Comments</title>
+  </head>
+  <body>
+     <form action="{% url 'commentSubmit' %}" method="post">
+     {% csrf_token %}
+    <div class="container" style="box-shadow: 0px 6px 12px grey, 0px 4px 8px lightgrey;height: 660px;overflow-y: scroll">
+    <div style="padding: 55px;width: 1200px;border-radius: 12px;box-shadow: 0px 4px 8px grey,0px 2px 4px lightgrey">
+        {% for p in post_content %}
+            {{ p.content }}
+        {% endfor %}
+    <br>
+        <span style="margin-left: 80%">~<i>post by: <span style="color: red"><b>{{ username|capfirst }}</b></span></i></span>
+
+    </div>
+    <hr>
+    <div class="md-form mb-4 pink-textarea active-pink-textarea">
+        <textarea id="form18" name="comment" class="md-textarea form-control" rows="3"></textarea>
+        <label for="form18">Add a public comments...</label>
+        <span style="margin-left: 75%">
+            <input type="hidden" value="{{ postid }}" name="pno">
+            <button type="submit">COMMENT</button>
+        </span>
+    </div>
+    <br>
+    {% for c in comments %}
+    <div style="width: 90%;border-radius: 15px;box-shadow: 0px 4px 8px brown;margin: 10px">
+        <div style="padding: 15px">
+            {{ c.comment }}
+            <hr>
+            {{ c.dateofcomment }}
+            {% for y in comentBy %}
+                <i>Post by:{{ y.userName|capfirst }}</i>
+                {% endfor %}
+        </div>
+
+    </div>
+    {% endfor %}
+
+    </div>
+    </form>
+
+
+
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+    -->
+  </body>
+</html>
+{% endblock %}
